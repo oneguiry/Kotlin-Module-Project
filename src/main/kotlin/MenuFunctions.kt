@@ -13,7 +13,7 @@ class MenuFunctions(
     }
 
     private fun printArchiveMenu() {
-        println("Выберите нужный пункт меню\n1: Создать архив\n2: Список архивов\n3: Выбор архива\n4: Завершить работу программы")
+        println("Выберите нужный пункт меню\n1: Создать архив\n2: Список архивов\n3: Выбор архива\n4: Завершить работу программы\n")
     }
 
     fun menuStartApp() {
@@ -21,16 +21,16 @@ class MenuFunctions(
     }
 
     private fun archiveMenu() {
-        var menu: Int
+        var menu: String
         val menuText = "1: Создать архив\n2: Список архивов\n" +
                 "3: Выбрать архив\n4: Выход из программы"
         val archiveLogic = ArchiveLogic()
         print(menuText)
 
         while (true) {
-            menu = scanner.nextInt()
+            menu = scanner.next()
             when (menu) {
-                1 -> {
+                "1" -> {
                     print("Введите имя архива: ")
                     val name = scanner.next()
                     if (archiveLogic.createNewArchive(name)) {
@@ -40,13 +40,13 @@ class MenuFunctions(
                     }
                 }
 
-                2 -> {
+                "2" -> {
                     val listNames = archiveLogic.getListOfArchives()
                     printNames(listNames, "Архивов")
                 }
 
-                3 -> {
-                    if(archiveLogic.getListOfArchives().isNotEmpty()){
+                "3" -> {
+                    if (archiveLogic.getListOfArchives().isNotEmpty()) {
                         print("Введите имя архива: ")
                         val name = scanner.next()
                         val archive = archiveLogic.getArchive(name)
@@ -57,12 +57,12 @@ class MenuFunctions(
                         } else {
                             println("Архива с именем $name не существует.")
                         }
-                    }
-                    else{
+                    } else {
                         println("Архивов пока нет.")
                     }
                 }
-                4 -> {
+
+                "4" -> {
                     return
                 }
 
@@ -77,9 +77,9 @@ class MenuFunctions(
     private fun noteMenu(archive: Archive) {
         printNoteMenu(archive.getName())
         while (true) {
-            val menu = scanner.nextInt()
+            val menu = scanner.next()
             when (menu) {
-                1 -> {
+                "1" -> {
                     print("Введите имя заметки: ")
                     val name = scanner.next()
                     print("Введите текст заметки: ")
@@ -89,13 +89,13 @@ class MenuFunctions(
                     println("Заметка $name успешна добавлена в архив ${archive.getName()}")
                 }
 
-                2 -> {
+                "2" -> {
                     val listNames = archive.getListOfNotes()
                     printNames(listNames, "Заметок")
                 }
 
-                3 -> {
-                    if(archive.getListOfNotes().isNotEmpty()){
+                "3" -> {
+                    if (archive.getListOfNotes().isNotEmpty()) {
                         print("Введите имя заметки: ")
                         val name = scanner.next()
                         val note = archive.getNote(name)
@@ -104,13 +104,15 @@ class MenuFunctions(
                         } else {
                             println("Заметки с именем $name не существует")
                         }
-                    }else {
+                    } else {
                         println("Заметок еще нет")
                     }
                 }
-
-                4 -> {
+                "4" -> {
                     return
+                }
+                else ->{
+                    println("Увы, но такой команды нет. Попробуйте еще раз")
                 }
             }
         }
